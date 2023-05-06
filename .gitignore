@@ -475,3 +475,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+API/SchedulerApi.db
+API/SchedulerApi.db-shm
+API/SchedulerApi.db-wal
+
+Persistence/Migrations/

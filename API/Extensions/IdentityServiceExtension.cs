@@ -9,7 +9,7 @@ namespace API.Extensions
 {
     public static class AddIdentityExtensions
     {
-        public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
             // Authorization and Authentication
             services.AddIdentityCore<User>(opt =>

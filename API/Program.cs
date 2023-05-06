@@ -10,8 +10,7 @@ using Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddIdentityService(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddScoped<IDataContext, DataContext>();
 builder.Services.AddScoped<TokenService>();
 
@@ -19,14 +18,6 @@ builder.Services.AddControllers(opt =>
 {
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     opt.Filters.Add(new AuthorizeFilter(policy));
-});
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-
-// Database Connection
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddSwaggerGen(c =>
@@ -56,6 +47,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Database Connection
+builder.Services.AddDbContext<DataContext>(opt =>
+{
+   opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,7 +62,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
